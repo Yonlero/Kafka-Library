@@ -1,0 +1,32 @@
+spring:
+  profiles:
+    active: dev-local
+  application:
+    name: Library_Event
+  kafka:
+    template:
+      default-topic: library-events
+    producer:
+      bootstrap-servers: localhost:9092, localhost:9093, localhost:9094
+      key-serializer: org.apache.kafka.common.serialization.UUIDSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      properties:
+        acks: all
+        retries: 10
+    admin:
+      properties:
+        bootstrap-servers: localhost:9092, localhost:9093, localhost:9094
+server:
+  port: 8080
+---
+spring:
+  application:
+    name: Library_Event
+  kafka:
+    producer:
+      bootstrap-servers: kafka-1:9092, kafka-2:9093, kafka-3:9094
+      key-serializer: org.apache.kafka.common.serialization.UUIDSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  config:
+    activate:
+      on-profile: dev-docker

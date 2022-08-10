@@ -1,0 +1,10 @@
+FROM maven:versão-jdk-11 as build
+//PASTA DENTRO DO CONTAIER
+WORKDIR /build
+//Copia a pasta ATUAL para dentro da pasta atual do container (/build)
+COPY . .
+//Pula os testes e cria o JAR
+RUN mvn clean package -DskipTest
+
+// Aqui em baixo segue a criação padrão de um container do spring
+FROM ..
